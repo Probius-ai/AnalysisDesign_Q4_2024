@@ -1,5 +1,3 @@
-package LibraryApplication;
-
 public class Borrower {
     private String name;
     private Loan currentLoan;
@@ -17,6 +15,10 @@ public class Borrower {
     
     public boolean isOnLoan() { // 대출 상태 확인
         return currentLoan != null;
+    }
+
+    public boolean isAvailable() { // 대출 가능한 상태 확인
+        
     }
 
     // setter
