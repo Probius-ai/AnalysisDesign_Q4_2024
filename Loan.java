@@ -1,4 +1,3 @@
-package LibraryApplication;
 
 public class Loan {
     private Book book;
@@ -23,6 +22,11 @@ public class Loan {
     
     public Borrower getBorrower() {
         return borrower;
+    }
+
+    public void deleteLink() {
+        this.book = null;
+        this.borrower = null;
     }
     
     /*

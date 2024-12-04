@@ -10,18 +10,52 @@ public class LibraryApplication {
         this.library = new Library();
     }
     
+    // 대출자 등록
+    public boolean registerBorrower(String name) {
+        Borrower newBorrower = new Borrower(name);
+        return library.addBorrower(newBorrower);
+    }
+
     // 도서 등록
     public boolean registerBook(String title, String author, int catalogueNumber) {
         Book newBook = new Book(title, author, catalogueNumber);
         return library.addBook(newBook);
     }
     
-    // 대출자 등록
-    public boolean registerBorrower(String name) {
-        Borrower newBorrower = new Borrower(name);
-        return library.addBorrower(newBorrower);
+    // 대출 가능한 도서 목록 표시
+    public void displayLoanableBooks() {
+        System.out.println("=== 대출 가능한 도서 목록 ===");
+        boolean hasAvailableBooks = false;
+        
+        for (Book book : library.getBooks()) {
+            if (!book.isOnLoan()) {  // returnBook() 메소드와 동일한 방식으로 확인
+                System.out.println(book.toString());
+                hasAvailableBooks = true;
+            }
+        }
+        
+        if (!hasAvailableBooks) {
+            System.out.println("현재 대출 가능한 도서가 없습니다.");
+        }
     }
-    
+
+    // 대출중인 도서 목록 표시
+    public void displayOnLoanBooks() {
+        System.out.println("=== 대출중인 도서 목록 ===");
+        boolean hasBorrowedBooks = false;
+
+        for (Book book : library.getBooks()) {
+            if (book.isOnLoan()) {
+                System.out.println(book.toString());
+                hasBorrowedBooks = true;
+            }
+        }
+
+        if (!hasBorrowedBooks) {
+            System.out.println("현재 대출중인 도서가 없습니다.");
+        }
+    }
+
     // 도서 대출
     public boolean borrowBook(Book book, Borrower borrower) {
         if (!library.getBooks().contains(book)) {
@@ -54,39 +88,5 @@ public class LibraryApplication {
             }
         }
         return false;
-    }
-    
-    // 대출 가능한 도서 목록 표시
-    public void displayAvailableBooks() {
-        System.out.println("=== 대출 가능한 도서 목록 ===");
-        boolean hasAvailableBooks = false;
-        
-        for (Book book : library.getBooks()) {
-            if (!book.isOnLoan()) {  // returnBook() 메소드와 동일한 방식으로 확인
-                System.out.println(book.toString());
-                hasAvailableBooks = true;
-            }
-        }
-        
-        if (!hasAvailableBooks) {
-            System.out.println("현재 대출 가능한 도서가 없습니다.");
-        }
-    }
-
-    // 대출중인 도서 목록 표시
-    public void displayBorrowedBooks() {
-        System.out.println("=== 대출중인 도서 목록 ===");
-        boolean hasBorrowedBooks = false;
-
-        for (Book book : library.getBooks()) {
-            if (book.isOnLoan()) {
-                System.out.println(book.toString());
-                hasBorrowedBooks = true;
-            }
-        }
-
-        if (!hasBorrowedBooks) {
-            System.out.println("현재 대출중인 도서가 없습니다.");
-        }
     }
 }
