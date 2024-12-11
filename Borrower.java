@@ -1,14 +1,16 @@
 public class Borrower {
     private String name;
+    private String birthDate;
     private Loan currentLoan;
     
     // 생성자
-    public Borrower(String name) {
+    public Borrower(String name, String birthDate) {
         this.name = name;
+        this.birthDate = birthDate;
     }
     
     // getter
-    public String getName() {
+    public String getBorrowerName() {
         return name;
     }
     
@@ -25,10 +27,6 @@ public class Borrower {
     }
 
     // setter
-    public void setName(String name) {
-        this.name = name;
-    }
-    
     public void setCurrentLoan(Loan loan) {
         this.currentLoan = loan;
     }

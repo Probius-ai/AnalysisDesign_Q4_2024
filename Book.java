@@ -11,15 +11,15 @@ public class Book {
     }
 
     // Getters
-    public String getTitle() {
+    public String getBookTitle() {
         return title;
     }
 
-    public String getAuthor() {
+    public String getBookAuthor() {
         return author;
     }
 
-    public int getUniqueNumber() {
+    public int getBookUniqueNumber() {
         return uniqueNumber;
     }
 
@@ -33,16 +33,7 @@ public class Book {
         this.currentLoan = loan;
     }
 
-    public String toString() {
-        return "책 제목: " + title + ", 저자: " + author + ", 카탈로그 번호: " + uniqueNumber;
-    }
-
-    public boolean check(int uniqueNumber) {
-
-    }
-
-    // public int compareTo(Book other) {
-    //     // TODO: 카탈로그 번호 기준 정렬 구현 예정
-    //     return this.uniqueNumber - other.uniqueNumber;
+    // public String toString() {
+    //     return "책 제목: " + title + ", 저자: " + author + ", 카탈로그 번호: " + uniqueNumber;
     // }
 }
