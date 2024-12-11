@@ -1,4 +1,4 @@
-class Book implements Comparable<Book> {
+public class Book {
     private String title;
     private String author;
     private int uniqueNumber;
@@ -19,7 +19,7 @@ class Book implements Comparable<Book> {
         return author;
     }
 
-    public int getBookUniqueNumber() {
+    public int getUniqueNumber() {
         return uniqueNumber;
     }
 
@@ -37,8 +37,12 @@ class Book implements Comparable<Book> {
         return "책 제목: " + title + ", 저자: " + author + ", 카탈로그 번호: " + uniqueNumber;
     }
 
-    public int compareTo(Book other) {
-        // TODO: 카탈로그 번호 기준 정렬 구현 예정
-        return this.uniqueNumber - other.uniqueNumber;
+    public boolean check(int uniqueNumber) {
+
     }
+
+    // public int compareTo(Book other) {
+    //     // TODO: 카탈로그 번호 기준 정렬 구현 예정
+    //     return this.uniqueNumber - other.uniqueNumber;
+    // }
 }
