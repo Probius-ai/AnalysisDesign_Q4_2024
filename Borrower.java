@@ -1,10 +1,12 @@
 public class Borrower {
     private String name;
+    private String birthDate;
     private Loan currentLoan;
     
     // 생성자
-    public Borrower(String name) {
+    public Borrower(String name, String birthDate) {
         this.name = name;
+        this.birthDate = birthDate;
     }
     
     // getter
@@ -20,7 +22,7 @@ public class Borrower {
         
     }
 
-    public boolean check(String name) {
+    public boolean isDuplicateBorrower(String name) {
 
     }
 

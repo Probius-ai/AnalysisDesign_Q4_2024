@@ -37,7 +37,7 @@ public class Book {
         return "책 제목: " + title + ", 저자: " + author + ", 카탈로그 번호: " + uniqueNumber;
     }
 
-    public boolean check(int uniqueNumber) {
+    public boolean isDuplicateBook(int uniqueNumber) {
 
     }
 
