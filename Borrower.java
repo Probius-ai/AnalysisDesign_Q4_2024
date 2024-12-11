@@ -5,7 +5,6 @@ public class Borrower {
     // 생성자
     public Borrower(String name) {
         this.name = name;
-        this.currentLoan = null;
     }
     
     // getter
@@ -19,6 +18,10 @@ public class Borrower {
 
     public boolean isAvailable() { // 대출 가능한 상태 확인
         
+    }
+
+    public boolean check(String name) {
+
     }
 
     // setter

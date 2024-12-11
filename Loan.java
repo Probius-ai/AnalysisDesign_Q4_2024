@@ -7,7 +7,7 @@ public class Loan {
     // private String dueDate;
     
     // 생성자
-    public Loan(Book book, Borrower borrower, String loanDate, String dueDate) {
+    public Loan(Book book, Borrower borrower) {
         this.book = book;
         this.borrower = borrower;
         // 추후 구현 예정: 대출 날짜와 반납 예정일 설정
