@@ -63,8 +63,8 @@ public class LibraryApplication {
     public boolean borrowBook(int uniqueNumber, String name) {
         TreeSet<Book> bookCollection = library.getBookCollection();
         HashSet<Borrower> borrowerCollection = library.getBorrowerCollection();
-        Book book;
-        Borrower borrower;
+        Book book = new Book("", "", 0);
+        Borrower borrower = new Borrower("");
 
         for (Book b : bookCollection) { // 검색
             if (b.getUniqueNumber() == uniqueNumber) {
