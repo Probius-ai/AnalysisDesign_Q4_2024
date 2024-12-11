@@ -22,7 +22,7 @@ public class Borrower {
         
     }
 
-    public boolean check(String name) {
+    public boolean isDuplicateBorrower(String name) {
 
     }
 
