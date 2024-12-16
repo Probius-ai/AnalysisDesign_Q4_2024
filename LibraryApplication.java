@@ -6,9 +6,9 @@ public class LibraryApplication {
     private Library library = new Library();
        
     // 대출자 등록
-    public boolean registerBorrower(String name) {
-        Borrower borrower = new Borrower(name);
-        boolean isDuplicate = borrower.check(name);
+    public boolean registerBorrower(String name, String birthDate) {
+        Borrower borrower = new Borrower(name, birthDate);
+        boolean isDuplicate = borrower.isDuplicateBorrower(name, birthDate);
 
         if (!isDuplicate) {
             library.addBorrower(borrower);
@@ -21,7 +21,7 @@ public class LibraryApplication {
     // 도서 등록
     public boolean registerBook(String title, String author, int uniqueNumber) {
         Book book = new Book(title, author, uniqueNumber);
-        boolean isDuplicate = book.check(uniqueNumber);
+        boolean isDuplicate = book.isDuplicateBook(title, author, uniqueNumber);
         
         if (!isDuplicate) {
             library.addBook(book);
@@ -60,11 +60,11 @@ public class LibraryApplication {
     }
 
     // 도서 대출
-    public boolean borrowBook(int uniqueNumber, String name) {
+    public boolean borrowBook(int uniqueNumber, String name, String birthDate) {
         TreeSet<Book> bookCollection = library.getBookCollection();
         HashSet<Borrower> borrowerCollection = library.getBorrowerCollection();
-        Book book = new Book("", "", 0);
-        Borrower borrower = new Borrower("");
+        Book book = null;
+        Borrower borrower = null;
 
         for (Book b : bookCollection) { // 검색
             if (b.getUniqueNumber() == uniqueNumber) {
@@ -74,7 +74,7 @@ public class LibraryApplication {
         }
 
         for (Borrower br : borrowerCollection) { // 검색
-            if (br.getName() == name) {
+            if (br.getName().equals(name) && br.getBirthDate().equals(birthDate)) {
                 borrower = br;
                 break;
             }
@@ -83,10 +83,6 @@ public class LibraryApplication {
         boolean isLoanableBook = book.isOnLoan();
         boolean isLoanableBorrower = borrower.isAvailable();
         
-        Loan loan = new Loan(book, borrower); // 객체 생성
-        
-
-
         // 추후 구현 예정: 날짜 관련 기능
         // 현재 날짜와 반납 예정일(2주 후) 설정
         // LocalDate now = LocalDate.now();
@@ -97,6 +93,7 @@ public class LibraryApplication {
 
         if (isLoanableBook && isLoanableBorrower) {
             // -> 여기에 생성한 loan 객체를 처리하는 코드가 필요
+            Loan loan = new Loan(book, borrower); // 객체 생성
             return true;
         }  else {
             return false;
@@ -104,13 +101,14 @@ public class LibraryApplication {
     }
     
     // 도서 반납
-    public boolean returnBook(int uniqueNumber, String name) {
+    public boolean returnBook(int uniqueNumber, String name, String birthDate) {
         TreeSet<Book> bookCollection = library.getBookCollection();
         HashSet<Borrower> borrowerCollection = library.getBorrowerCollection();
         LinkedList<Loan> loanCollection = library.getLoanCollection();
-        Book book;
-        Borrower borrower;
-        Loan loan;
+        
+        Book book = null;
+        Borrower borrower = null;
+        boolean isReturned = false; // 결과를 저장할 변수
 
         for (Book b : bookCollection) {
             if (b.getUniqueNumber() == uniqueNumber) {
@@ -119,26 +117,21 @@ public class LibraryApplication {
             }
         }
 
-        for (Borrower br : borrowerCollection) {
-            if (br.getName() == name) {
+        for (Borrower br : borrowerCollection) { // 검색
+            if (br.getName().equals(name) && br.getBirthDate().equals(birthDate)) {
                 borrower = br;
                 break;
             }
         }
         
         for (Loan l : loanCollection) {
-            if (l.get) // ... ???
+            if (l.getBook().equals(book) && l.getBorrower().equals(borrower)) {
+                l.deleteLink();
+                isReturned = true; // 반납 성공
+                break;
+            }
         }
 
-
-
-
-        // for (Loan loan : library.getLoans()) {
-        //     if (loan.getBook().equals(book)) {
-        //         book.setCurrentLoan(null);  // Book의 대출 상태만 초기화
-        //         return true;
-        //     }
-        // }
-        // return false;
+        return isReturned;
     }
 }
