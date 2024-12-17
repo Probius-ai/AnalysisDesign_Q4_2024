@@ -94,7 +94,7 @@ public class Library {
 
     public Book findBookByUniqueNumber(int uniqueNumber) {
         for (Book book : bookCollection) {
-            if (book.getUniqueNumber() == uniqueNumber) {
+            if (book.getBookUniqueNumber() == uniqueNumber) {
                 return book;
             }
         }
