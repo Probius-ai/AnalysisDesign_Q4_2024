@@ -24,6 +24,9 @@ public class Loan {
     }
 
     public void deleteLink() {
+        book.setOnLoan(false);
+        borrower.decrementBorrowedBooks();
+
         this.book = null;
         this.borrower = null;
     }
