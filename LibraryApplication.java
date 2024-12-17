@@ -60,19 +60,11 @@ public class LibraryApplication {
         Book book = library.findBookByUniqueNumber(uniqueNumber);
         Borrower borrower = library.findBorrowerByNameAndBirthDate(name, birthDate);
 
-        boolean isLoanableBook = book.isAvailable();
-        boolean isLoanableBorrower = borrower.isAvailable();
-        
-        // 추후 구현 예정: 날짜 관련 기능
-        // 현재 날짜와 반납 예정일(2주 후) 설정
-        // LocalDate now = LocalDate.now();
-        // LocalDate dueDate = now.plusWeeks(2);
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        
-        // 추후 구현 예정: 날짜 정보는 임시로 null 처리
-
-        if (isLoanableBook && isLoanableBorrower) {
+        if (book.isAvailable() && borrower.isAvailable()) {
             Loan loan = new Loan(book, borrower); // 객체 생성
+
+            book.setOnLoan(true);
+            borrower.incrementBorrowedBooks();
             library.addLoan(loan);
             return true;
         }  else {
