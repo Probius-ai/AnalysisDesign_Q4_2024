@@ -31,7 +31,7 @@ public class LibraryApplication {
         boolean hasAvailableBooks = false;
         
         for (Book book : library.getBookCollection()) {
-            if (!book.isOnLoan()) { 
+            if (book.isAvailable()) { 
                 System.out.println(book.toString());
                 hasAvailableBooks = true;
             }
@@ -46,7 +46,7 @@ public class LibraryApplication {
         boolean hasBorrowedBooks = false;
 
         for (Book book : library.getBookCollection()) {
-            if (book.isOnLoan()) {
+            if (!book.isAvailable()) {
                 System.out.println(book.toString());
                 hasBorrowedBooks = true;
             }
@@ -60,7 +60,7 @@ public class LibraryApplication {
         Book book = library.findBookByUniqueNumber(uniqueNumber);
         Borrower borrower = library.findBorrowerByNameAndBirthDate(name, birthDate);
 
-        boolean isLoanableBook = book.isOnLoan();
+        boolean isLoanableBook = book.isAvailable();
         boolean isLoanableBorrower = borrower.isAvailable();
         
         // 추후 구현 예정: 날짜 관련 기능
