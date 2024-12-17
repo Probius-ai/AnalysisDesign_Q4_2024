@@ -1,13 +1,13 @@
 public class LibraryApplication {
-    private Library library = new Library();
+    private Library library = new Library("Library");
        
     // 대출자 등록
     public boolean registerBorrower(String name, String birthDate) {
-        Borrower borrower = new Borrower(name, birthDate);
-        boolean isDuplicate = library.isDuplicateBorrower(borrower);
+        Borrower br = new Borrower(name, birthDate);
+        boolean isDuplicate = library.isDuplicateBorrower(br);
 
         if (!isDuplicate) {
-            library.addBorrower(borrower);
+            library.addBorrower(br);
         } 
 
         return !isDuplicate;
@@ -30,9 +30,9 @@ public class LibraryApplication {
         System.out.println("=== 대출 가능한 도서 목록 ===");
         boolean hasAvailableBooks = false;
         
-        for (Book book : library.getBookCollection()) {
-            if (book.isAvailable()) { 
-                System.out.println(book.toString());
+        for (Book b : library.getBookCollection()) {
+            if (b.isAvailable()) { 
+                System.out.println(b.toString());
                 hasAvailableBooks = true;
             }
         }
@@ -57,14 +57,14 @@ public class LibraryApplication {
 
     // 도서 대출
     public boolean borrowBook(int uniqueNumber, String name, String birthDate) {
-        Book book = library.findBookByUniqueNumber(uniqueNumber);
-        Borrower borrower = library.findBorrowerByNameAndBirthDate(name, birthDate);
+        Book b = library.findBookByUniqueNumber(uniqueNumber);
+        Borrower br = library.findBorrowerByNameAndBirthDate(name, birthDate);
 
-        if (book != null && borrower != null && book.isAvailable() && borrower.isAvailable()) {
-            Loan loan = new Loan(book, borrower); // 객체 생성
+        if (b != null && br != null && b.isAvailable() && br.isAvailable()) {
+            Loan loan = new Loan(b, br); // 객체 생성
 
-            book.setOnLoan(true);
-            borrower.incrementBorrowedBooks();
+            b.setOnLoan(true);
+            br.incrementBorrowedBooks();
             library.addLoan(loan);
             return true;
         }  else {
@@ -74,9 +74,9 @@ public class LibraryApplication {
     
     // 도서 반납
     public boolean returnBook(int uniqueNumber, String name, String birthDate) {
-        Book book = library.findBookByUniqueNumber(uniqueNumber);
-        Borrower borrower = library.findBorrowerByNameAndBirthDate(name, birthDate);
-        Loan loan = library.findLoanByBookAndBorrower(book, borrower);
+        Book b = library.findBookByUniqueNumber(uniqueNumber);
+        Borrower br = library.findBorrowerByNameAndBirthDate(name, birthDate);
+        Loan loan = library.findLoanByBookAndBorrower(b, br);
 
         if (loan != null) {
             loan.deleteLink();

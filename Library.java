@@ -1,11 +1,13 @@
 import java.util.*;
 
 public class Library {
+    private String name;
     private TreeSet<Book> bookCollection;
     private HashSet<Borrower> borrowerCollection;
     private LinkedList<Loan> loanCollection;
 
-    public Library() { 
+    public Library(String name) {
+        this.name = name; 
         bookCollection = new TreeSet<>();
         borrowerCollection = new HashSet<>();
         loanCollection = new LinkedList<>();
