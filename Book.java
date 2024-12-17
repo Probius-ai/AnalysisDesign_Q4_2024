@@ -43,9 +43,4 @@ public class Book {
                 ", onLoan=" + onLoan +
                 '}';
     }
-
-    // public int compareTo(Book other) {
-    //     // TODO: 카탈로그 번호 기준 정렬 구현 예정
-    //     return this.uniqueNumber - other.uniqueNumber;
-    // }
 }
