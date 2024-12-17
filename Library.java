@@ -103,7 +103,7 @@ public class Library {
 
     public Borrower findBorrowerByNameAndBirthDate(String name, String birthDate) {
         for (Borrower borrower : borrowerCollection) {
-            if (borrower.getName().equals(name) && borrower.getBirthDate().equals(birthDate)) {
+            if (borrower.getBorrowerName().equals(name) && borrower.getBirthDate().equals(birthDate)) {
                 return borrower;
             }
         }
