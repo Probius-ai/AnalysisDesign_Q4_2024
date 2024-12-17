@@ -13,6 +13,10 @@ public class Borrower {
     public String getBorrowerName() {
         return name;
     }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
     
     public boolean isOnLoan() { // 대출 상태 확인
         return currentLoan != null;
@@ -22,7 +26,7 @@ public class Borrower {
         
     }
 
-    public boolean isDuplicateBorrower(String name) {
+    public boolean isDuplicateBorrower(String name, String birthDate) {
 
     }
 

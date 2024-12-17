@@ -37,7 +37,7 @@ public class Book {
         return "책 제목: " + title + ", 저자: " + author + ", 카탈로그 번호: " + uniqueNumber;
     }
 
-    public boolean isDuplicateBook(int uniqueNumber) {
+    public boolean isDuplicateBook(String title, String author, int uniqueNumber) {
 
     }
 
