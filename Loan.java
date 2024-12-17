@@ -1,4 +1,3 @@
-
 public class Loan {
     private Book book;
     private Borrower borrower;
