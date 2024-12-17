@@ -23,7 +23,7 @@ public class Main {
                 case 1: // 대출자 등록
                     System.out.print("대출자 이름: ");
                     String borrowerName = scanner.nextLine();
-                    System.out.print("대출자 생년월일(yyyy-MM-dd): ");
+                    System.out.print("대출자 생년월일(yymmdd): ");
                     String birthDate = scanner.nextLine();
 
                     boolean registeredBorrower = libraryApp.registerBorrower(borrowerName, birthDate);
@@ -68,7 +68,7 @@ public class Main {
                     scanner.nextLine(); // 개행 문자 처리
                     System.out.print("대출자 이름: ");
                     String borrowName = scanner.nextLine();
-                    System.out.print("대출자 생년월일(yyyy-MM-dd): ");
+                    System.out.print("대출자 생년월일(yymmdd): ");
                     String borrowBirthDate = scanner.nextLine();
 
                     boolean borrowed = libraryApp.borrowBook(borrowBookNumber, borrowName, borrowBirthDate);
@@ -85,7 +85,7 @@ public class Main {
                     scanner.nextLine(); // 개행 문자 처리
                     System.out.print("대출자 이름: ");
                     String returnName = scanner.nextLine();
-                    System.out.print("대출자 생년월일(yyyy-MM-dd): ");
+                    System.out.print("대출자 생년월일(yymmdd): ");
                     String returnBirthDate = scanner.nextLine();
 
                     boolean returned = libraryApp.returnBook(returnBookNumber, returnName, returnBirthDate);

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Borrower {
     private String name;
     private String birthDate;
@@ -41,5 +43,19 @@ public class Borrower {
                 ", birthDate='" + birthDate + '\'' +
                 ", borrowedBookCount=" + borrowedBookCount +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Borrower other = (Borrower) obj;
+        return Objects.equals(name, other.name) && Objects.equals(birthDate, other.birthDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, birthDate);
     }
 }

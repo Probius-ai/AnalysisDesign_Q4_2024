@@ -1,4 +1,6 @@
-public class Book {
+import java.util.Objects;
+
+public class Book implements Comparable<Book> {
     private String title;
     private String author;
     private int uniqueNumber;
@@ -42,5 +44,25 @@ public class Book {
                 ", uniqueNumber=" + uniqueNumber +
                 ", onLoan=" + onLoan +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Book other) {
+        // uniqueNumber 기준으로 비교
+        return Integer.compare(this.uniqueNumber, other.uniqueNumber);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Book other = (Book) obj;
+        return uniqueNumber == other.uniqueNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uniqueNumber);
     }
 }
