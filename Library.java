@@ -83,4 +83,43 @@ public class Library {
     //     }
     //     return null;
     // }
+
+    public boolean isDuplicateBook(Book book) {
+        return bookCollection.contains(book);
+    }
+
+    public boolean isDuplicateBorrower(Borrower borrower) {
+        return borrowerCollection.contains(borrower);
+    }
+
+    public Book findBookByUniqueNumber(int uniqueNumber) {
+        for (Book book : bookCollection) {
+            if (book.getUniqueNumber() == uniqueNumber) {
+                return book;
+            }
+        }
+        return null;
+    }
+
+    public Borrower findBorrowerByNameAndBirthDate(String name, String birthDate) {
+        for (Borrower borrower : borrowerCollection) {
+            if (borrower.getName().equals(name) && borrower.getBirthDate().equals(birthDate)) {
+                return borrower;
+            }
+        }
+        return null;
+    }
+
+    public Loan findLoanByBookAndBorrower(Book book, Borrower borrower) {
+        for (Loan loan : loanCollection) {
+            if (loan.getBook().equals(book) && loan.getBorrower().equals(borrower)) {
+                return loan;
+            }
+        }
+        return null;
+    }
+
+    public void addLoan(Loan loan) {
+        loanCollection.add(loan);
+    }
 }
