@@ -60,7 +60,7 @@ public class LibraryApplication {
         Book book = library.findBookByUniqueNumber(uniqueNumber);
         Borrower borrower = library.findBorrowerByNameAndBirthDate(name, birthDate);
 
-        if (book.isAvailable() && borrower.isAvailable()) {
+        if (book != null && borrower != null && book.isAvailable() && borrower.isAvailable()) {
             Loan loan = new Loan(book, borrower); // 객체 생성
 
             book.setOnLoan(true);
