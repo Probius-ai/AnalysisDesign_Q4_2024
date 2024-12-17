@@ -26,9 +26,6 @@ public class Borrower {
         
     }
 
-    public boolean isDuplicateBorrower(String name, String birthDate) {
-
-    }
 
     // setter
     public void setName(String name) {

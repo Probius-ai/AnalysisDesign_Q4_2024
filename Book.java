@@ -37,10 +37,6 @@ public class Book {
         return "책 제목: " + title + ", 저자: " + author + ", 카탈로그 번호: " + uniqueNumber;
     }
 
-    public boolean isDuplicateBook(String title, String author, int uniqueNumber) {
-
-    }
-
     // public int compareTo(Book other) {
     //     // TODO: 카탈로그 번호 기준 정렬 구현 예정
     //     return this.uniqueNumber - other.uniqueNumber;
