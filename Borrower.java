@@ -12,7 +12,7 @@ public class Borrower {
     }
     
     // getter
-    public String getName() {
+    public String getBorrowerName() {
         return name;
     }
 

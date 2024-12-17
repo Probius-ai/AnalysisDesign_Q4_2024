@@ -12,15 +12,15 @@ public class Book {
     }
 
     // Getters
-    public String getTitle() {
+    public String getBookTitle() {
         return title;
     }
 
-    public String getAuthor() {
+    public String getBookAuthor() {
         return author;
     }
 
-    public int getUniqueNumber() {
+    public int getBookUniqueNumber() {
         return uniqueNumber;
     }
 
