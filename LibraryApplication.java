@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Map;
+
 public class LibraryApplication {
     private Library library = new Library("Library");
        
@@ -61,11 +64,13 @@ public class LibraryApplication {
         Borrower br = library.findBorrowerByNameAndBirthDate(name, birthDate);
 
         if (b != null && br != null && b.isAvailable() && br.isAvailable()) {
-            Loan loan = new Loan(b, br); // 객체 생성
+            Loan loanForHistory = new Loan(b, br); // 대출 기록용 객체 생성
+            Loan loanForSystem = new Loan(b, br); // 시스템용 객체 생성
+            library.addLoanToHistory(br, loanForHistory);
 
             b.setOnLoan(true);
             br.incrementBorrowedBooks();
-            library.addLoan(loan);
+            library.addLoan(loanForSystem);
             return true;
         }  else {
             return false;
@@ -85,4 +90,32 @@ public class LibraryApplication {
             return false;
         }
     }
+
+    // LibraryApplication 클래스
+    public boolean displayLoanHistory(String name, String birthDate) {
+        Borrower br = library.findBorrowerByNameAndBirthDate(name, birthDate);
+
+        if (br == null) {
+            System.out.println("해당 대출자를 찾을 수 없습니다.");
+            return false;
+        }
+
+        ArrayList<Loan> loanHistory = library.getLoanHistory(br);
+
+        if (loanHistory == null || loanHistory.isEmpty()) {
+            System.out.println("대출 기록이 없습니다.");
+            return false;
+        }
+
+        System.out.println("=== Loan History Collection ===");
+        System.out.println("Borrower: " + br.toString());
+        for (Loan loan : loanHistory) {
+            System.out.println("  - Loan Details:");
+            System.out.println("      Book: " + loan.getBook().toString());
+            System.out.println("      Loan Date: " + loan.getLoanDateTime());
+            System.out.println("      Due Date: " + loan.getDueDateTime());
+        }
+        return true;
+    }
+
 }

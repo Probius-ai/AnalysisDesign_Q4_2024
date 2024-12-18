@@ -13,7 +13,8 @@ public class Main {
             System.out.println("4. 대출중인 도서 목록 보기");
             System.out.println("5. 도서 대출");
             System.out.println("6. 도서 반납");
-            System.out.println("7. 종료");
+            System.out.println("7. 대출 기록 보기");
+            System.out.println("8. 종료");
             System.out.print("메뉴를 선택하세요: ");
 
             int choice = scanner.nextInt();
@@ -96,7 +97,18 @@ public class Main {
                     }
                     break;
 
-                case 7: // 종료
+                case 7: // 대출 기록 보기
+                    System.out.print("대출자 이름: ");
+                    String historyName = scanner.nextLine();
+                    System.out.print("대출자 생년월일(yymmdd): ");
+                    String historyBirthDate = scanner.nextLine();
+
+                    if (!libraryApp.displayLoanHistory(historyName, historyBirthDate)) {
+                        System.out.println("대출 기록을 가져올 수 없습니다.");
+                    }
+                    break;
+
+                case 8: // 종료
                     System.out.println("도서관 관리 시스템을 종료합니다.");
                     scanner.close();
                     return;
