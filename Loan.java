@@ -58,7 +58,7 @@ public class Loan {
     public String[] returnLoanInfo() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH시 mm분");
 
-        return new String[] {
+        return new String[] {// 해야될꺼
             book.returnBookInfo()[0],
             book.returnBookInfo()[1],
             book.returnBookInfo()[2],
