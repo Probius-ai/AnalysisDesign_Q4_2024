@@ -125,9 +125,9 @@ public class LibraryApplication {
         }
 
         System.out.println("=== Loan History Collection ===");
-        borrower.display();
+        // borrower.display();
         for (Loan loan : loanHistory) {
-            loan.display();
+            // loan.display();
         }
         return true;
     }
