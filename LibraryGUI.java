@@ -335,6 +335,15 @@ public class LibraryGUI {
                 String name = nameField.getText();
                 String birthDate = birthDateField.getText();
 
+                // 입력 필드중 빈값이 있는지 확인
+                if (name.isEmpty() || birthDate.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                        "모든 필드를 입력해주세요.",
+                        "입력 오류",
+                        JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 // 대출 기록 검색 메소드 호출
                 String history = libraryApp.getLoanHistory(name, birthDate);
 
