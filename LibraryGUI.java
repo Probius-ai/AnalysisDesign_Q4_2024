@@ -116,15 +116,138 @@ public class LibraryGUI {
             }
         });
 
-        // 도서 대출
+
+        // 도서 대출 버튼
         borrowBookButton.addActionListener(e -> {
+            JPanel panel = new JPanel(new GridLayout(4, 2, 5, 5));
+            panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+            // 도서 고유번호, 대출자 이름, 생년월일 입력 필드 생성
+            JTextField uniqueNumberField = new JTextField();
+            JTextField nameField = new JTextField();
+            JTextField birthDateField = new JTextField();
+
+            panel.add(new JLabel("도서 고유번호:"));
+            panel.add(uniqueNumberField);
+            panel.add(new JLabel("대출자 이름:"));
+            panel.add(nameField);
+            panel.add(new JLabel("생년월일(YYYYMMDD):"));
+            panel.add(birthDateField);
+
+            int result = JOptionPane.showConfirmDialog(null, panel, 
+                "도서 대출", JOptionPane.OK_CANCEL_OPTION);
+
+            // 입력 창 확인 버튼 클릭시
+            if (result == JOptionPane.OK_OPTION) {
+                try {
+                    // 입력 필드 값 가져오기
+                    int uniqueNumber = Integer.parseInt(uniqueNumberField.getText());
+                    String name = nameField.getText();
+                    String birthDate = birthDateField.getText();
+
+                    // 입력 필드중 빈값이 있는지 확인
+                    if (name.isEmpty() || birthDate.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, 
+                            "모든 필드를 입력해주세요.", 
+                            "입력 오류", 
+                            JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    // 도서 대출 메소드 호출 성공여부 받아오기
+                    boolean success = libraryApp.borrowBook(uniqueNumber, name, birthDate);
+
+                    // 도서 대출 성공시
+                    if (success) {
+                        JOptionPane.showMessageDialog(null,
+                            "도서가 성공적으로 대출되었습니다.",
+                            "대출 성공",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        // 도서 대출 실패시
+                        JOptionPane.showMessageDialog(null,
+                            "도서 대출에 실패했습니다.\n" +
+                            "- 도서나 대출자가 존재하지 않거나\n" +
+                            "- 도서가 이미 대출중이거나\n" +
+                            "- 대출자가 이미 최대 권수를 대출했을 수 있습니다.",
+                            "대출 실패",
+                            JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NumberFormatException ex) {
+                    // 고유번호 입력 오류시
+                    JOptionPane.showMessageDialog(null,
+                        "도서 고유번호는 숫자여야 합니다.",
+                        "입력 오류",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            }
         });
+        returnBookButton.addActionListener(e -> {
+            // 반납할 도서 정보를 입력받을 패널 생성
+            JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
+            panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // 도서 반납
-        returnBookButton.addActionListener(e -> showMessageDialog("도서 반납 창"));
+            // 입력 필드 생성
+            JTextField uniqueNumberField = new JTextField();
+            JTextField nameField = new JTextField();
+            JTextField birthDateField = new JTextField();
 
-        // 대출 기록 보기
+            // 라벨과 입력 필드를 패널에 추가
+            panel.add(new JLabel("도서 고유번호:"));
+            panel.add(uniqueNumberField);
+            panel.add(new JLabel("대출자 이름:"));
+            panel.add(nameField);
+            panel.add(new JLabel("대출자 생년월일:"));
+            panel.add(birthDateField);
+
+            int result = JOptionPane.showConfirmDialog(null, panel,
+                "도서 반납", JOptionPane.OK_CANCEL_OPTION);
+
+            // 입력 창 확인 버튼 클릭시
+            if (result == JOptionPane.OK_OPTION) {
+                try {
+                    // 입력 필드 값 가져오기
+                    int uniqueNumber = Integer.parseInt(uniqueNumberField.getText());
+                    String name = nameField.getText();
+                    String birthDate = birthDateField.getText();
+
+                    // 입력 필드중 빈값이 있는지 확인
+                    if (name.isEmpty() || birthDate.isEmpty()) {
+                        JOptionPane.showMessageDialog(null,
+                            "모든 필드를 입력해주세요.",
+                            "입력 오류",
+                            JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    // 도서 반납 메소드 호출 성공여부 받아오기
+                    boolean success = libraryApp.returnBook(uniqueNumber, name, birthDate);
+
+                    // 도서 반납 성공시
+                    if (success) {
+                        JOptionPane.showMessageDialog(null,
+                            "도서가 성공적으로 반납되었습니다.",
+                            "반납 성공",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        // 도서 반납 실패시
+                        JOptionPane.showMessageDialog(null,
+                            "도서 반납에 실패했습니다.\n" +
+                            "- 도서나 대출자가 존재하지 않거나\n" +
+                            "- 해당 도서를 대출하지 않은 사용자일 수 있습니다.",
+                            "반납 실패",
+                            JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NumberFormatException ex) {
+                    // 고유번호 입력 오류시
+                    JOptionPane.showMessageDialog(null,
+                        "도서 고유번호는 숫자여야 합니다.",
+                        "입력 오류",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+      
         viewLoanHistoryButton.addActionListener(e -> showMessageDialog("대출 기록 보기 창"));
 
         // 종료
