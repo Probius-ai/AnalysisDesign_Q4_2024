@@ -107,16 +107,10 @@ public class LibraryApplication {
             return false;
         }
 
-        // 날짜 및 시간 포맷터 정의
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH시 mm분");
-
         System.out.println("=== Loan History Collection ===");
-        System.out.println("Borrower: " + borrower.toString());
+        borrower.display();
         for (Loan loan : loanHistory) {
-            System.out.println("  - Loan Details:");
-            System.out.println("      Book: " + loan.getBook().toString());
-            System.out.println("      대출일: " + loan.getLoanDateTime().format(formatter));
-            System.out.println("      반납일: " + loan.getDueDateTime().format(formatter));
+            loan.display();
         }
         return true;
     }
