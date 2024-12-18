@@ -80,7 +80,70 @@ public class LibraryGUI {
             }
         });
         // 도서 등록
-        registerBookButton.addActionListener(e -> showMessageDialog("도서 등록 창"));
+        registerBookButton.addActionListener(e -> {
+            // 도서 등록 창 생성
+            JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
+            
+            // 도서 제목, 저자, 고유번호 입력 필드 생성
+            JLabel titleLabel = new JLabel("도서 제목:");
+            JTextField titleField = new JTextField(10);
+            JLabel authorLabel = new JLabel("도서 저자:");
+            JTextField authorField = new JTextField(10);
+            JLabel numberLabel = new JLabel("도서 고유번호:");
+            JTextField numberField = new JTextField(10);
+            
+            panel.add(titleLabel);
+            panel.add(titleField);
+            panel.add(authorLabel);
+            panel.add(authorField);
+            panel.add(numberLabel);
+            panel.add(numberField);
+
+            // 도서 등록 창 표시
+            int result = JOptionPane.showConfirmDialog(null, panel,
+                "도서 등록", JOptionPane.OK_CANCEL_OPTION);
+
+            if (result == JOptionPane.OK_OPTION) {
+                String title = titleField.getText();
+                String author = authorField.getText();
+                String uniqueNumberStr = numberField.getText();
+                
+                // 필드중 빈값이 있는지 확인
+                if (title.isEmpty() || author.isEmpty() || uniqueNumberStr.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                        "모든 필드를 입력해주세요.",
+                        "입력 오류",
+                        JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                try {
+                    // 고유번호 정수로 변환
+                    int uniqueNumber = Integer.parseInt(uniqueNumberStr);
+                    // 도서 등록 메소드 호출 성공여부 받아오기
+                    boolean success = libraryApp.registerBook(title, author, uniqueNumber);
+                    // 도서 등록 성공시
+                    if (success) {
+                        JOptionPane.showMessageDialog(null,
+                            "도서가 성공적으로 등록되었습니다.",
+                            "등록 성공",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        // 도서 등록 실패시
+                        JOptionPane.showMessageDialog(null,
+                            "이미 존재하는 도서입니다.",
+                            "등록 실패", 
+                            JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NumberFormatException ex) {
+                    // 고유번호 입력 오류시
+                    JOptionPane.showMessageDialog(null,
+                        "고유번호는 숫자만 입력 가능합니다.",
+                        "입력 오류",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         
         // 대출 가능한 도서 목록 보기
         viewLoanableBooksButton.addActionListener(e -> {
@@ -89,11 +152,13 @@ public class LibraryGUI {
                 JOptionPane.showMessageDialog(null, "대출 가능한 도서가 없습니다.", 
                     "도서 목록", JOptionPane.INFORMATION_MESSAGE);
             } else {
+                // 대출 가능한 도서 목록 표시
                 JTextArea textArea = new JTextArea(books);
                 textArea.setEditable(false);
                 JScrollPane scrollPane = new JScrollPane(textArea);
                 scrollPane.setPreferredSize(new Dimension(300, 400));
                 
+                // 도서 목록 출력 부분
                 JOptionPane.showMessageDialog(null, scrollPane, 
                     "대출 가능한 도서 목록", JOptionPane.PLAIN_MESSAGE);
             }
