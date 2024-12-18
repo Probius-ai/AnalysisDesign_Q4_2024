@@ -37,7 +37,7 @@ public class Book implements Comparable<Book> {
     }
 
     public void display() {
-        System.out.println("| 제목 : " + title + ", 저자 : " + author + ", 고유번호 : " + uniqueNumber + " |");
+        System.out.println("| book 제목 : " + title + ", 저자 : " + author + ", 고유번호 : " + uniqueNumber + " |");
     }
 
     @Override
