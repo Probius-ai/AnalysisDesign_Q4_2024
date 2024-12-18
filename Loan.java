@@ -45,13 +45,28 @@ public class Loan {
         this.borrower = null;
     }
 
-    public void display() {
-        // 날짜 및 시간 포맷터 정의
+    // public void display() {
+    //     // 날짜 및 시간 포맷터 정의
+    //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH시 mm분");
+
+    //     System.out.println("  - 대출 세부사항 -  :");
+    //     book.display();
+    //     System.out.println("| 대출일: " + loanDateTime.format(formatter));
+    //     System.out.println("| 반납일: " + dueDateTime.format(formatter));
+    // }
+
+    public String[] returnLoanInfo() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH시 mm분");
 
-        System.out.println("  - 대출 세부사항 -  :");
-        book.display();
-        System.out.println("| 대출일: " + loanDateTime.format(formatter));
-        System.out.println("| 반납일: " + dueDateTime.format(formatter));
+        return new String[] {
+            book.returnBookInfo()[0],
+            book.returnBookInfo()[1],
+            book.returnBookInfo()[2],
+            borrower.returnBorrowerInfo()[0],
+            borrower.returnBorrowerInfo()[1],
+            borrower.returnBorrowerInfo()[2],
+            loanDateTime.format(formatter),
+            dueDateTime.format(formatter)
+        };
     }
 }
