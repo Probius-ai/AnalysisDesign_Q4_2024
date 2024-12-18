@@ -1,4 +1,3 @@
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class LibraryApplication {
@@ -110,27 +109,31 @@ public class LibraryApplication {
     }
 
     // LibraryApplication 클래스
-    public boolean displayLoanHistory(String name, String birthDate) {
+    // 대출 기록 출력
+    public String getLoanHistory(String name, String birthDate) {
         Borrower borrower = library.findBorrowerByNameAndBirthDate(name, birthDate);
 
         if (borrower == null) {
-            System.out.println("해당 대출자를 찾을 수 없습니다.");
-            return false;
+            return "";
         }
 
         ArrayList<Loan> loanHistory = library.getLoanHistory(borrower);
-
         if (loanHistory == null || loanHistory.isEmpty()) {
-            System.out.println("대출 기록이 없습니다.");
-            return false;
+            return "";
         }
 
-        System.out.println("=== Loan History Collection ===");
-        borrower.display();
+        StringBuilder result = new StringBuilder("=== 대출 기록 ===\n\n");
+        String[] borrowerInfo = borrower.returnBorrowerInfo();
+        result.append(String.format("대출자 이름: %s\n생년월일: %s\n현재 대출 도서 수: %s\n\n", 
+            borrowerInfo[0], borrowerInfo[1], borrowerInfo[2]));
+
         for (Loan loan : loanHistory) {
-            loan.display();
+            String[] loanInfo = loan.returnLoanInfo();
+            result.append(String.format("도서명: %s\n저자: %s\n도서 고유번호: %s\n대출일: %s\n반납예정일: %s\n\n",
+                loanInfo[0], loanInfo[1], loanInfo[2], loanInfo[6], loanInfo[7]));
         }
-        return true;
+
+        return result.toString();
     }
 
     

@@ -313,7 +313,38 @@ public class LibraryGUI {
             }
         });
       
-        viewLoanHistoryButton.addActionListener(e -> showMessageDialog("대출 기록 보기 창"));
+        viewLoanHistoryButton.addActionListener(e -> {
+            // 대출 기록 검색 창
+            JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
+            panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            // 입력 필드 생성
+            JTextField nameField = new JTextField();
+            JTextField birthDateField = new JTextField();
+
+            // 입력 필드를 패널에 추가
+            panel.add(new JLabel("대출자 이름:"));
+            panel.add(nameField);
+            panel.add(new JLabel("대출자 생년월일:"));
+            panel.add(birthDateField);
+
+            int result = JOptionPane.showConfirmDialog(null, panel,
+                "대출 기록 검색", JOptionPane.OK_CANCEL_OPTION);
+
+            if (result == JOptionPane.OK_OPTION) {
+                String name = nameField.getText();
+                String birthDate = birthDateField.getText();
+
+                // 대출 기록 검색 메소드 호출
+                String history = libraryApp.getLoanHistory(name, birthDate);
+
+                if (history.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "대출 기록이 없습니다.", "대출 기록", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, history, "대출 기록", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
 
         // 종료
         exitButton.addActionListener(e -> System.exit(0));
