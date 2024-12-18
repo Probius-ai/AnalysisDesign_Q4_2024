@@ -36,8 +36,17 @@ public class Book implements Comparable<Book> {
         this.onLoan = onLoan; // 대출 상태 변경
     }
 
-    public void display() {
-        System.out.println("| book 제목 : " + title + ", 저자 : " + author + ", 고유번호 : " + uniqueNumber + " |");
+    // public void display() {
+    //     System.out.println("| book 제목 : " + title + ", 저자 : " + author + ", 고유번호 : " + uniqueNumber + " |");
+    // } 
+    // 출력하는 메소드 대신 밑의 리턴하는 메소드로 구현 GUI에서 사용
+
+    public String[] returnBookInfo() {
+        return new String[] {
+            title,
+            author,
+            String.valueOf(uniqueNumber)
+        };
     }
 
     @Override

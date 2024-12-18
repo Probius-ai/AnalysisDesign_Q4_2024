@@ -28,34 +28,52 @@ public class LibraryApplication {
     }
     
     // 대출 가능한 도서 목록 표시
-    public boolean displayLoanableBooks() {
-        System.out.println("=== 대출 가능한 도서 목록 ===");
+    public String getLoanableBooks() {
+        StringBuilder result = new StringBuilder("=== 대출 가능한 도서 목록 ===\n\n");
         boolean hasAvailableBooks = false;
         
         for (Book book : library.getBookCollection()) {
-            if (book.isAvailable()) { 
-                book.display();
+            if (book.isAvailable()) {
+                String[] bookInfo = book.returnBookInfo();
+                result.append(String.format("제목: %s\n저자: %s\n고유번호: %s\n\n", 
+                    bookInfo[0], bookInfo[1], bookInfo[2]));
                 hasAvailableBooks = true;
             }
         }
-
-        return hasAvailableBooks;
+        
+        return hasAvailableBooks ? result.toString() : "";
     }
 
     // 대출중인 도서 목록 표시
-    public boolean displayOnLoanBooks() {
-        System.out.println("=== 대출중인 도서 목록 ===");
+    public String getOnLoanBooks() {
+        StringBuilder result = new StringBuilder("=== 대출중인 도서 목록 ===\n\n");
         boolean hasBorrowedBooks = false;
-
+        
         for (Book book : library.getBookCollection()) {
             if (!book.isAvailable()) {
-                book.display();
+                String[] bookInfo = book.returnBookInfo();
+                result.append(String.format("제목: %s\n저자: %s\n고유번호: %s\n\n", 
+                    bookInfo[0], bookInfo[1], bookInfo[2]));
                 hasBorrowedBooks = true;
             }
         }
-
-        return hasBorrowedBooks;
+        
+        return hasBorrowedBooks ? result.toString() : "";
     }
+
+    // public boolean displayOnLoanBooks() {
+    //     System.out.println("=== 대출중인 도서 목록 ===");
+    //     boolean hasBorrowedBooks = false;
+    
+    //     for (Book book : library.getBookCollection()) {
+    //         if (!book.isAvailable()) {
+    //             book.display();
+    //             hasBorrowedBooks = true;
+    //         }
+    //     }
+
+    //     return hasBorrowedBooks;
+    // }
 
     // 도서 대출
     public boolean borrowBook(int uniqueNumber, String name, String birthDate) {
@@ -113,4 +131,6 @@ public class LibraryApplication {
         }
         return true;
     }
+
+    
 }
