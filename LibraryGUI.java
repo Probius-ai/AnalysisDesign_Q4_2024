@@ -1,7 +1,5 @@
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
 
 
 public class LibraryGUI {
@@ -41,13 +39,35 @@ public class LibraryGUI {
         registerBookButton.addActionListener(e -> showMessageDialog("도서 등록 창"));
         
         viewLoanableBooksButton.addActionListener(e -> {
-            String books = libraryApp.getLoanableBooks(); // Assuming this returns a formatted String
-            JOptionPane.showMessageDialog(null, books.isEmpty() ? "대출 가능한 도서가 없습니다." : books);
+            String books = libraryApp.getLoanableBooks();
+            if (books.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "대출 가능한 도서가 없습니다.", 
+                    "도서 목록", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JTextArea textArea = new JTextArea(books);
+                textArea.setEditable(false);
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                scrollPane.setPreferredSize(new Dimension(300, 400));
+                
+                JOptionPane.showMessageDialog(null, scrollPane, 
+                    "대출 가능한 도서 목록", JOptionPane.PLAIN_MESSAGE);
+            }
         });
 
         viewOnLoanBooksButton.addActionListener(e -> {
-            String books = libraryApp.getOnLoanBooks(); // Assuming this returns a formatted String
-            JOptionPane.showMessageDialog(null, books.isEmpty() ? "대출중인 도서가 없습니다." : books);
+            String books = libraryApp.getOnLoanBooks();
+            if (books.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "대출중인 도서가 없습니다.", 
+                    "도서 목록", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JTextArea textArea = new JTextArea(books);
+                textArea.setEditable(false);
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                scrollPane.setPreferredSize(new Dimension(300, 400));
+                
+                JOptionPane.showMessageDialog(null, scrollPane, 
+                    "대출중인 도서 목록", JOptionPane.PLAIN_MESSAGE);
+            }
         });
 
         borrowBookButton.addActionListener(e -> showMessageDialog("도서 대출 창"));
