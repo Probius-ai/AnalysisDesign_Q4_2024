@@ -38,6 +38,7 @@ public class LibraryGUI {
         registerBorrowerButton.addActionListener(e -> showMessageDialog("대출자 등록 창"));
         registerBookButton.addActionListener(e -> showMessageDialog("도서 등록 창"));
         
+        // 대출 가능한 도서 목록 보기
         viewLoanableBooksButton.addActionListener(e -> {
             String books = libraryApp.getLoanableBooks();
             if (books.isEmpty()) {
@@ -54,6 +55,7 @@ public class LibraryGUI {
             }
         });
 
+        // 대출중인 도서 목록 보기
         viewOnLoanBooksButton.addActionListener(e -> {
             String books = libraryApp.getOnLoanBooks();
             if (books.isEmpty()) {
