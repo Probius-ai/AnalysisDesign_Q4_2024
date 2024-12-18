@@ -5,12 +5,14 @@ public class Library {
     private TreeSet<Book> bookCollection;
     private HashSet<Borrower> borrowerCollection;
     private LinkedList<Loan> loanCollection;
+    private HashMap<Borrower, ArrayList<Loan>> loanHistoryCollection;
 
     public Library(String name) {
         this.name = name; 
         bookCollection = new TreeSet<>();
         borrowerCollection = new HashSet<>();
         loanCollection = new LinkedList<>();
+        loanHistoryCollection = new HashMap<>();
     }
 
 
@@ -27,6 +29,16 @@ public class Library {
         loanCollection.add(loan);
     }
 
+    public void addLoanToHistory(Borrower borrower, Loan loan) {
+        // 기존 대출 기록이 있다면 리스트 가져오기
+        ArrayList<Loan> loans = loanHistoryCollection.getOrDefault(borrower, new ArrayList<>());
+
+        // 새로운 대출 추가
+        loans.add(loan);
+
+        // HashMap에 업데이트
+        loanHistoryCollection.put(borrower, loans);
+    }
 
     // 컬렉션 getter 메소드들
     public TreeSet<Book> getBookCollection() {
@@ -41,6 +53,9 @@ public class Library {
         return loanCollection;
     }
 
+    public ArrayList<Loan> getLoanHistory(Borrower borrower) {
+        return loanHistoryCollection.get(borrower);
+    }
 
     // 중복 체크 관련 메소드들
     public boolean isDuplicateBook(Book book) {
