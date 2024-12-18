@@ -1,3 +1,4 @@
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class LibraryApplication {
@@ -61,6 +62,19 @@ public class LibraryApplication {
         return hasBorrowedBooks ? result.toString() : "";
     }
 
+    // public boolean displayOnLoanBooks() {
+    //     System.out.println("=== 대출중인 도서 목록 ===");
+    //     boolean hasBorrowedBooks = false;
+    
+    //     for (Book book : library.getBookCollection()) {
+    //         if (!book.isAvailable()) {
+    //             book.display();
+    //             hasBorrowedBooks = true;
+    //         }
+    //     }
+
+    //     return hasBorrowedBooks;
+    // }
 
     // 도서 대출
     public boolean borrowBook(int uniqueNumber, String name, String birthDate) {
@@ -68,12 +82,13 @@ public class LibraryApplication {
         Borrower borrower = library.findBorrowerByNameAndBirthDate(name, birthDate);
 
         if (book != null && borrower != null && book.isAvailable() && borrower.isAvailable()) {
-            Loan loan = new Loan(book, borrower);
-            library.addLoanToHistory(borrower, book);
+            Loan loanForHistory = new Loan(book, borrower); // 대출 기록용 객체 생성
+            Loan loanForSystem = new Loan(book, borrower); // 시스템용 객체 생성
+            library.addLoanToHistory(borrower, loanForHistory);
 
             book.setOnLoan(true);
             borrower.incrementBorrowedBooks();
-            library.addLoan(loan);
+            library.addLoan(loanForSystem);
             return true;
         }  else {
             return false;
@@ -103,7 +118,7 @@ public class LibraryApplication {
             return false;
         }
 
-        ArrayList<LoanHistory> loanHistory = library.getLoanHistory(borrower);
+        ArrayList<Loan> loanHistory = library.getLoanHistory(borrower);
 
         if (loanHistory == null || loanHistory.isEmpty()) {
             System.out.println("대출 기록이 없습니다.");
@@ -111,10 +126,12 @@ public class LibraryApplication {
         }
 
         System.out.println("=== Loan History Collection ===");
-        // borrower.display();
-        for (LoanHistory loan : loanHistory) {
-            // loan.display();
+        borrower.display();
+        for (Loan loan : loanHistory) {
+            loan.display();
         }
         return true;
     }
+
+    
 }
