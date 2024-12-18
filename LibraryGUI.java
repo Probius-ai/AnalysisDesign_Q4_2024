@@ -35,7 +35,51 @@ public class LibraryGUI {
         JButton exitButton = new JButton("8. 종료");
 
         // Add ActionListeners to open new windows
-        registerBorrowerButton.addActionListener(e -> showMessageDialog("대출자 등록 창"));
+        // 대출자 등록
+        registerBorrowerButton.addActionListener(e -> {
+            JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
+            
+            JLabel nameLabel = new JLabel("대출자 이름:");
+            JTextField nameField = new JTextField(10);
+            JLabel birthLabel = new JLabel("생년월일(yymmdd):");
+            JTextField birthField = new JTextField(10);
+            
+            panel.add(nameLabel);
+            panel.add(nameField);
+            panel.add(birthLabel); 
+            panel.add(birthField);
+
+            int result = JOptionPane.showConfirmDialog(null, panel, 
+                "대출자 등록", JOptionPane.OK_CANCEL_OPTION);
+
+            if (result == JOptionPane.OK_OPTION) {
+                String name = nameField.getText();
+                String birthDate = birthField.getText();
+                
+                if (name.isEmpty() || birthDate.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, 
+                        "모든 필드를 입력해주세요.", 
+                        "입력 오류", 
+                        JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                // 대출자 등록 메소드 호출 성공여부 받아오기
+                boolean success = libraryApp.registerBorrower(name, birthDate);
+                
+                if (success) {
+                    JOptionPane.showMessageDialog(null,
+                        "대출자가 성공적으로 등록되었습니다.",
+                        "등록 성공",
+                        JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                        "이미 존재하는 대출자입니다.",
+                        "등록 실패",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        // 도서 등록
         registerBookButton.addActionListener(e -> showMessageDialog("도서 등록 창"));
         
         // 대출 가능한 도서 목록 보기
@@ -72,9 +116,18 @@ public class LibraryGUI {
             }
         });
 
-        borrowBookButton.addActionListener(e -> showMessageDialog("도서 대출 창"));
+        // 도서 대출
+        borrowBookButton.addActionListener(e -> {
+
+        });
+
+        // 도서 반납
         returnBookButton.addActionListener(e -> showMessageDialog("도서 반납 창"));
+
+        // 대출 기록 보기
         viewLoanHistoryButton.addActionListener(e -> showMessageDialog("대출 기록 보기 창"));
+
+        // 종료
         exitButton.addActionListener(e -> System.exit(0));
 
         // Add buttons to the button panel
