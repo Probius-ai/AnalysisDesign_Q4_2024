@@ -36,14 +36,8 @@ public class Book implements Comparable<Book> {
         this.onLoan = onLoan; // 대출 상태 변경
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", uniqueNumber=" + uniqueNumber +
-                ", onLoan=" + onLoan +
-                '}';
+    public void display() {
+        System.out.println("| book 제목 : " + title + ", 저자 : " + author + ", 고유번호 : " + uniqueNumber + " |");
     }
 
     @Override

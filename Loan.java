@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Loan {
     private Book book;
@@ -42,5 +43,15 @@ public class Loan {
 
         this.book = null;
         this.borrower = null;
+    }
+
+    public void display() {
+        // 날짜 및 시간 포맷터 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH시 mm분");
+
+        System.out.println("  - 대출 세부사항 -  :");
+        book.display();
+        System.out.println("| 대출일: " + loanDateTime.format(formatter));
+        System.out.println("| 반납일: " + dueDateTime.format(formatter));
     }
 }

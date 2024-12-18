@@ -36,13 +36,8 @@ public class Borrower {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Borrower{" +
-                "name='" + name + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                ", borrowedBookCount=" + borrowedBookCount +
-                '}';
+    public void display() {
+        System.out.println("| Borrower 이름 : " + name + ", 생년월일 : " + birthDate + " |" );
     }
 
     @Override
