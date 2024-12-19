@@ -218,7 +218,7 @@ public class LibraryGUI extends JFrame {
         panel.add(uniqueNumberField);
         panel.add(new JLabel("대출자 이름:"));
         panel.add(nameField);
-        panel.add(new JLabel("생년월일(YYYYMMDD):"));
+        panel.add(new JLabel("생년월일(yymmdd):"));
         panel.add(birthDateField);
 
         int result = JOptionPane.showConfirmDialog(null, panel,
@@ -348,7 +348,7 @@ public class LibraryGUI extends JFrame {
         // 라벨과 입력 필드를 패널에 추가
         panel.add(new JLabel("대출자 이름:"));
         panel.add(nameField);
-        panel.add(new JLabel("대출자 생년월일 (yyyy-MM-dd):"));
+        panel.add(new JLabel("대출자 생년월일 (yymmdd):"));
         panel.add(birthDateField);
 
         // 사용자 입력 대화 상자 출력
@@ -384,6 +384,7 @@ public class LibraryGUI extends JFrame {
                 // 대출 기록 표시용 텍스트 생성
                 StringBuilder historyMessage = new StringBuilder();
                 historyMessage.append("=== 대출 기록 ===\n");
+                historyMessage.append("이름 : " + name + " | 생년월일 : " + birthDate + "\n");
                 for (LoanHistory loan : loanHistory) {
                     historyMessage.append("책 제목: ").append(loan.getBook().getBookTitle()).append("\n");
                     historyMessage.append("대출일: ").append(formatDate(loan.getLoanDateTime())).append("\n");
