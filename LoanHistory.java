@@ -1,5 +1,4 @@
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class LoanHistory {
     private Book book;
@@ -32,19 +31,4 @@ public class LoanHistory {
                 ", Loan Date: " + loanDateTime +
                 ", Due Date: " + dueDateTime;
     }
-
-    // public String[] returnLoanInfo() {
-    //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH시 mm분");
-
-    //     return new String[] {
-    //         book.returnBookInfo()[0],
-    //         book.returnBookInfo()[1],
-    //         book.returnBookInfo()[2],
-    //         borrower.returnBorrowerInfo()[0],
-    //         borrower.returnBorrowerInfo()[1],
-    //         borrower.returnBorrowerInfo()[2],
-    //         loanDateTime.format(formatter),
-    //         dueDateTime.format(formatter)
-    //     };
-    // }
 }

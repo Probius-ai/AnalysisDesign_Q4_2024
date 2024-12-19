@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class LibraryApplication {
     private Library library = new Library("Library");
-       
+
     // 대출자 등록
     public boolean registerBorrower(String name, String birthDate) {
         Borrower borrower = new Borrower(name, birthDate);
@@ -10,7 +10,7 @@ public class LibraryApplication {
 
         if (!isDuplicate) {
             library.addBorrower(borrower);
-        } 
+        }
 
         return !isDuplicate;
     }
@@ -19,28 +19,28 @@ public class LibraryApplication {
     public boolean registerBook(String title, String author, int uniqueNumber) {
         Book book = new Book(title, author, uniqueNumber);
         boolean isDuplicate = library.isDuplicateBook(book);
-        
+
         if (!isDuplicate) {
             library.addBook(book);
-        } 
+        }
 
         return !isDuplicate;
     }
-    
+
     // 대출 가능한 도서 목록 표시
     public String getLoanableBooks() {
         StringBuilder result = new StringBuilder("=== 대출 가능한 도서 목록 ===\n\n");
         boolean hasAvailableBooks = false;
-        
+
         for (Book book : library.getBookCollection()) {
             if (book.isAvailable()) {
                 String[] bookInfo = book.returnBookInfo();
-                result.append(String.format("제목: %s\n저자: %s\n고유번호: %s\n\n", 
-                    bookInfo[0], bookInfo[1], bookInfo[2]));
+                result.append(String.format("제목: %s\n저자: %s\n고유번호: %s\n\n",
+                        bookInfo[0], bookInfo[1], bookInfo[2]));
                 hasAvailableBooks = true;
             }
         }
-        
+
         return hasAvailableBooks ? result.toString() : "";
     }
 
@@ -48,19 +48,18 @@ public class LibraryApplication {
     public String getOnLoanBooks() {
         StringBuilder result = new StringBuilder("=== 대출중인 도서 목록 ===\n\n");
         boolean hasBorrowedBooks = false;
-        
+
         for (Book book : library.getBookCollection()) {
             if (!book.isAvailable()) {
                 String[] bookInfo = book.returnBookInfo();
-                result.append(String.format("제목: %s\n저자: %s\n고유번호: %s\n\n", 
-                    bookInfo[0], bookInfo[1], bookInfo[2]));
+                result.append(String.format("제목: %s\n저자: %s\n고유번호: %s\n\n",
+                        bookInfo[0], bookInfo[1], bookInfo[2]));
                 hasBorrowedBooks = true;
             }
         }
-        
+
         return hasBorrowedBooks ? result.toString() : "";
     }
-
 
     // 도서 대출
     public boolean borrowBook(int uniqueNumber, String name, String birthDate) {
@@ -75,11 +74,11 @@ public class LibraryApplication {
             borrower.incrementBorrowedBooks();
             library.addLoan(loan);
             return true;
-        }  else {
+        } else {
             return false;
         }
     }
-    
+
     // 도서 반납
     public boolean returnBook(int uniqueNumber, String name, String birthDate) {
         Book book = library.findBookByUniqueNumber(uniqueNumber);
@@ -95,19 +94,26 @@ public class LibraryApplication {
     }
 
     // LibraryApplication 클래스
-    public ArrayList<LoanHistory> displayLoanHistory(String name, String birthDate) {
+    public boolean displayLoanHistory(String name, String birthDate) {
         Borrower borrower = library.findBorrowerByNameAndBirthDate(name, birthDate);
 
         if (borrower == null) {
-            return null;
+            System.out.println("해당 대출자를 찾을 수 없습니다.");
+            return false;
         }
 
         ArrayList<LoanHistory> loanHistory = library.getLoanHistory(borrower);
 
         if (loanHistory == null || loanHistory.isEmpty()) {
-            return new ArrayList<>();
+            System.out.println("대출 기록이 없습니다.");
+            return false;
         }
 
-        return loanHistory;
+        System.out.println("=== Loan History Collection ===");
+        // borrower.display();
+        for (LoanHistory loan : loanHistory) {
+            // loan.display();
+        }
+        return true;
     }
 }
