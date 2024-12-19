@@ -59,6 +59,10 @@ public class Library {
         return loanHistoryCollection.get(borrower);
     }
 
+    public String getLibraryName() {
+        return name;
+    }
+
     // 중복 체크 관련 메소드들
     public boolean isDuplicateBook(Book book) {
         return bookCollection.contains(book);
