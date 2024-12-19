@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class LibraryApplication {
@@ -29,7 +28,7 @@ public class LibraryApplication {
     }
 
     // 대출 가능한 도서 목록 표시
-    public String getLoanableBooks() {
+    public String displayLoanableBooks() {
         StringBuilder result = new StringBuilder("=== 대출 가능한 도서 목록 ===\n\n");
         boolean hasAvailableBooks = false;
 
@@ -46,7 +45,7 @@ public class LibraryApplication {
     }
 
     // 대출중인 도서 목록 표시
-    public String getOnLoanBooks() {
+    public String displayOnLoanBooks() {
         StringBuilder result = new StringBuilder("=== 대출중인 도서 목록 ===\n\n");
         boolean hasBorrowedBooks = false;
 

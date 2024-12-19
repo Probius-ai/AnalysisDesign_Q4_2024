@@ -172,7 +172,7 @@ public class LibraryGUI extends JFrame {
     }
 
     private void showLoanableBooks() {
-        String books = libraryApp.getLoanableBooks();
+        String books = libraryApp.displayLoanableBooks();
         if (books.isEmpty()) {
             JOptionPane.showMessageDialog(null, "대출 가능한 도서가 없습니다.",
                     "도서 목록", JOptionPane.INFORMATION_MESSAGE);
@@ -190,7 +190,7 @@ public class LibraryGUI extends JFrame {
     }
 
     private void showOnLoanBooks() {
-        String books = libraryApp.getOnLoanBooks();
+        String books = libraryApp.displayOnLoanBooks();
         if (books.isEmpty()) {
             JOptionPane.showMessageDialog(null, "대출중인 도서가 없습니다.",
                     "도서 목록", JOptionPane.INFORMATION_MESSAGE);
@@ -412,8 +412,6 @@ public class LibraryGUI extends JFrame {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH시 mm분");
         return dateTime.format(formatter);
     }
-
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(LibraryGUI::new);

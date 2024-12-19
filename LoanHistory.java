@@ -24,11 +24,4 @@ public class LoanHistory {
     public LocalDateTime getDueDateTime() {
         return dueDateTime;
     }
-
-    @Override
-    public String toString() {
-        return "Book: " + book.getBookAuthor() +
-                ", Loan Date: " + loanDateTime +
-                ", Due Date: " + dueDateTime;
-    }
 }

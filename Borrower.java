@@ -35,11 +35,6 @@ public class Borrower {
             borrowedBookCount--;
         }
     }
-
-    // public void display() {
-    //     System.out.println("| Borrower 이름 : " + name + ", 생년월일 : " + birthDate + " |" );
-    // }
-    // 출력하는 메소드 대신 밑의 리턴하는 메소드로 구현 GUI에서 사용
     
     public String[] returnBorrowerInfo() {
         return new String[] {
