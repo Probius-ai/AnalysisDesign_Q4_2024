@@ -3,40 +3,45 @@ import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.*;
 
 public class LibraryGUI extends JFrame {
+    // 도서관 관리 애플리케이션 객체 생성
     private LibraryApplication libraryApp = new LibraryApplication();
 
+    // 생성자: GUI 초기화 및 레이아웃 구성
     public LibraryGUI() {
-        // Main Frame
         setTitle("도서관 관리 시스템");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 700);
+        setSize(500, 700); // 윈도우 크기 설정
 
-        // Main Panel with BorderLayout
+        // 메인 패널 구성: Header, ButtonPanel, Footer 추가
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(createHeader(), BorderLayout.NORTH);
         mainPanel.add(createButtonPanel(), BorderLayout.CENTER);
         mainPanel.add(createFooter(), BorderLayout.SOUTH);
 
-        // Add main panel to frame
+        // 메인 패널 추가 및 창 보이기
         add(mainPanel);
         setVisible(true);
     }
 
+    // 상단 header 생성: 프로그램 이름 표시
     private JLabel createHeader() {
         JLabel headerLabel = new JLabel("도서관 관리 시스템", SwingConstants.CENTER);
         headerLabel.setFont(new Font("Serif", Font.BOLD, 24));
-        headerLabel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+        headerLabel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10)); // 여백 추가
         return headerLabel;
     }
 
+    // 버튼 생성: 주요 기능 버튼 배치
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel(new GridLayout(4, 2, 15, 15));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // 패널 여백 설정
 
+        // 버튼 생성 및 이벤트 리스너 추가
         buttonPanel.add(createButton("1. 대출자 등록", e -> borrowerRegistrationDialog()));
         buttonPanel.add(createButton("2. 도서 등록", e -> bookRegistrationDialog()));
         buttonPanel.add(createButton("3. 대출 가능한 도서 목록 보기", e -> showLoanableBooks()));
@@ -49,6 +54,7 @@ public class LibraryGUI extends JFrame {
         return buttonPanel;
     }
 
+    // 하단 footer 생성
     private JLabel createFooter() {
         JLabel footerLabel = new JLabel("© 2024 도서관 시스템", SwingConstants.CENTER);
         footerLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -56,15 +62,18 @@ public class LibraryGUI extends JFrame {
         return footerLabel;
     }
 
+    // 버튼 생성 메서드: 텍스트와 클릭 이벤트 리스너를 설정
     private JButton createButton(String text, ActionListener actionListener) {
         JButton button = new JButton(text);
         button.addActionListener(actionListener);
         return button;
     }
 
+    // borrower 등록 다이얼로그 생성
     private void borrowerRegistrationDialog() {
         JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
 
+        // 이름과 생년월일 입력 필드 추가
         JLabel nameLabel = new JLabel("대출자 이름:");
         JTextField nameField = new JTextField(10);
         JLabel birthLabel = new JLabel("생년월일(yymmdd):");
@@ -75,6 +84,7 @@ public class LibraryGUI extends JFrame {
         panel.add(birthLabel);
         panel.add(birthField);
 
+        // 대화 상자 표시
         int result = JOptionPane.showConfirmDialog(null, panel,
                 "대출자 등록", JOptionPane.OK_CANCEL_OPTION);
 
@@ -106,6 +116,7 @@ public class LibraryGUI extends JFrame {
         }
     }
 
+    // book 등록 다이얼로그 생성
     private void bookRegistrationDialog() {
         // 도서 등록 창 생성
         JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
@@ -172,7 +183,10 @@ public class LibraryGUI extends JFrame {
     }
 
     private void showLoanableBooks() {
+        // 대출 가능한 도서 목록을 가져옴
         String books = libraryApp.displayLoanableBooks();
+
+        // 대출 가능한 도서가 없을 경우
         if (books.isEmpty()) {
             JOptionPane.showMessageDialog(null, "대출 가능한 도서가 없습니다.",
                     "도서 목록", JOptionPane.INFORMATION_MESSAGE);
@@ -190,7 +204,10 @@ public class LibraryGUI extends JFrame {
     }
 
     private void showOnLoanBooks() {
+        // 대출 중인 도서 목록을 가져옴
         String books = libraryApp.displayOnLoanBooks();
+
+        // 대출 중인 도서가 없을 경우
         if (books.isEmpty()) {
             JOptionPane.showMessageDialog(null, "대출중인 도서가 없습니다.",
                     "도서 목록", JOptionPane.INFORMATION_MESSAGE);
@@ -270,6 +287,7 @@ public class LibraryGUI extends JFrame {
         }
     }
 
+    // 도서를 반납하는 입력 다이얼로그 생성
     private void returnBookDialog() {
         // 반납할 도서 정보를 입력받을 패널 생성
         JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
@@ -336,6 +354,7 @@ public class LibraryGUI extends JFrame {
         }
     }
 
+    // 대출 기록을 조회하고 표시하는 메서드
     private void showLoanHistory() {
         // 대출 기록을 입력받을 패널 생성
         JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
@@ -385,7 +404,11 @@ public class LibraryGUI extends JFrame {
                 StringBuilder historyMessage = new StringBuilder();
                 historyMessage.append("=== 대출 기록 ===\n");
                 historyMessage.append("이름 : " + name + " | 생년월일 : " + birthDate + "\n");
-                for (LoanHistory loan : loanHistory) {
+
+                // 각 대출 기록 상세 정보 추가
+                Iterator<LoanHistory> iter = loanHistory.iterator();
+                while (iter.hasNext() == true) {
+                    LoanHistory loan = (LoanHistory)iter.next();
                     historyMessage.append("책 제목: ").append(loan.getBook().getBookTitle()).append("\n");
                     historyMessage.append("대출일: ").append(formatDate(loan.getLoanDateTime())).append("\n");
                     historyMessage.append("반납 기한: ").append(formatDate(loan.getDueDateTime())).append("\n\n");
@@ -408,7 +431,7 @@ public class LibraryGUI extends JFrame {
         }
     }
 
-    // 날짜 포맷팅 메서드
+    // 날짜 포맷팅 메서드, LocalDateTime을 원하는 포맷으로 변환하는 메서드
     private String formatDate(LocalDateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH시 mm분");
         return dateTime.format(formatter);
