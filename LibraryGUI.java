@@ -1,5 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -334,21 +337,83 @@ public class LibraryGUI extends JFrame {
     }
 
     private void showLoanHistory() {
-        showMessageDialog("대출 기록 보기 창");
+        // 대출 기록을 입력받을 패널 생성
+        JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // 입력 필드 생성
+        JTextField nameField = new JTextField();
+        JTextField birthDateField = new JTextField();
+
+        // 라벨과 입력 필드를 패널에 추가
+        panel.add(new JLabel("대출자 이름:"));
+        panel.add(nameField);
+        panel.add(new JLabel("대출자 생년월일 (yyyy-MM-dd):"));
+        panel.add(birthDateField);
+
+        // 사용자 입력 대화 상자 출력
+        int result = JOptionPane.showConfirmDialog(null, panel,
+                "대출 기록 조회", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                // 입력 값 가져오기
+                String name = nameField.getText().trim();
+                String birthDate = birthDateField.getText().trim();
+
+                // 필드 검증
+                if (name.isEmpty() || birthDate.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "모든 필드를 입력해주세요.",
+                            "입력 오류",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // 대출 기록 가져오기
+                ArrayList<LoanHistory> loanHistory = libraryApp.displayLoanHistory(name, birthDate);
+
+                if (loanHistory == null || loanHistory.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "대출 기록이 없습니다.",
+                            "조회 실패",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+
+                // 대출 기록 표시용 텍스트 생성
+                StringBuilder historyMessage = new StringBuilder();
+                historyMessage.append("=== 대출 기록 ===\n");
+                for (LoanHistory loan : loanHistory) {
+                    historyMessage.append("책 제목: ").append(loan.getBook().getBookTitle()).append("\n");
+                    historyMessage.append("대출일: ").append(formatDate(loan.getLoanDateTime())).append("\n");
+                    historyMessage.append("반납 기한: ").append(formatDate(loan.getDueDateTime())).append("\n\n");
+                }
+
+                // 대출 기록을 대화 상자로 표시
+                JTextArea textArea = new JTextArea(historyMessage.toString());
+                textArea.setEditable(false);
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                scrollPane.setPreferredSize(new Dimension(400, 300));
+
+                JOptionPane.showMessageDialog(null, scrollPane,
+                        "대출 기록", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,
+                        "대출 기록을 조회하는 중 오류가 발생했습니다.",
+                        "오류",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
-    private void showMessageDialog(String message) {
-        JFrame dialogFrame = new JFrame(message);
-        dialogFrame.setSize(300, 200);
-        dialogFrame.setLocationRelativeTo(null);
-        dialogFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        JLabel label = new JLabel(message, SwingConstants.CENTER);
-        label.setFont(new Font("SansSerif", Font.BOLD, 16));
-
-        dialogFrame.add(label);
-        dialogFrame.setVisible(true);
+    // 날짜 포맷팅 메서드
+    private String formatDate(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH시 mm분");
+        return dateTime.format(formatter);
     }
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(LibraryGUI::new);

@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class LibraryApplication {
@@ -94,26 +95,19 @@ public class LibraryApplication {
     }
 
     // LibraryApplication 클래스
-    public boolean displayLoanHistory(String name, String birthDate) {
+    public ArrayList<LoanHistory> displayLoanHistory(String name, String birthDate) {
         Borrower borrower = library.findBorrowerByNameAndBirthDate(name, birthDate);
 
         if (borrower == null) {
-            System.out.println("해당 대출자를 찾을 수 없습니다.");
-            return false;
+            return null;
         }
 
         ArrayList<LoanHistory> loanHistory = library.getLoanHistory(borrower);
 
         if (loanHistory == null || loanHistory.isEmpty()) {
-            System.out.println("대출 기록이 없습니다.");
-            return false;
+            return new ArrayList<>();
         }
 
-        System.out.println("=== Loan History Collection ===");
-        // borrower.display();
-        for (LoanHistory loan : loanHistory) {
-            // loan.display();
-        }
-        return true;
+        return loanHistory;
     }
 }
