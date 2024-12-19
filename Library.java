@@ -74,7 +74,9 @@ public class Library {
 
     // 검색 관련 메소드들
     public Book findBookByUniqueNumber(int uniqueNumber) {
-        for (Book book : bookCollection) {
+        Iterator<Book> iter = bookCollection.iterator();
+        while (iter.hasNext() == true) {
+            Book book = (Book)iter.next();
             if (book.getBookUniqueNumber() == uniqueNumber) {
                 return book;
             }
@@ -83,7 +85,9 @@ public class Library {
     }
 
     public Borrower findBorrowerByNameAndBirthDate(String name, String birthDate) {
-        for (Borrower borrower : borrowerCollection) {
+        Iterator<Borrower> iter = borrowerCollection.iterator();
+        while (iter.hasNext() == true) {
+            Borrower borrower = (Borrower)iter.next();
             if (borrower.getBorrowerName().equals(name) && borrower.getBirthDate().equals(birthDate)) {
                 return borrower;
             }
@@ -92,7 +96,9 @@ public class Library {
     }
 
     public Loan findLoanByBookAndBorrower(Book book, Borrower borrower) {
-        for (Loan loan : loanCollection) {
+        Iterator<Loan> iter = loanCollection.iterator();
+        while (iter.hasNext() == true) {
+            Loan loan = (Loan)iter.next();
             if (loan.getBook().equals(book) && loan.getBorrower().equals(borrower)) {
                 return loan;
             }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class LibraryApplication {
     private Library library = new Library("Library");
@@ -32,7 +33,9 @@ public class LibraryApplication {
         StringBuilder result = new StringBuilder("=== 대출 가능한 도서 목록 ===\n\n");
         boolean hasAvailableBooks = false;
 
-        for (Book book : library.getBookCollection()) {
+        Iterator<Book> iter = library.getBookCollection().iterator();
+        while (iter.hasNext() == true) {
+            Book book = (Book)iter.next();
             if (book.isAvailable()) {
                 String[] bookInfo = book.returnBookInfo();
                 result.append(String.format("제목: %s\n저자: %s\n고유번호: %s\n\n",
@@ -40,7 +43,6 @@ public class LibraryApplication {
                 hasAvailableBooks = true;
             }
         }
-
         return hasAvailableBooks ? result.toString() : "";
     }
 
@@ -49,7 +51,9 @@ public class LibraryApplication {
         StringBuilder result = new StringBuilder("=== 대출중인 도서 목록 ===\n\n");
         boolean hasBorrowedBooks = false;
 
-        for (Book book : library.getBookCollection()) {
+        Iterator<Book> iter = library.getBookCollection().iterator();
+        while (iter.hasNext() == true) {
+            Book book = (Book) iter.next();
             if (!book.isAvailable()) {
                 String[] bookInfo = book.returnBookInfo();
                 result.append(String.format("제목: %s\n저자: %s\n고유번호: %s\n\n",
@@ -57,7 +61,6 @@ public class LibraryApplication {
                 hasBorrowedBooks = true;
             }
         }
-
         return hasBorrowedBooks ? result.toString() : "";
     }
 
