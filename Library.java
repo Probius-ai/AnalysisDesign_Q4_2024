@@ -1,4 +1,3 @@
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class Library {
@@ -6,7 +5,7 @@ public class Library {
     private TreeSet<Book> bookCollection;
     private HashSet<Borrower> borrowerCollection;
     private LinkedList<Loan> loanCollection;
-    private HashMap<Borrower, ArrayList<LoanHistory>> loanHistoryCollection;
+    private HashMap<Borrower, ArrayList<Loan>> loanHistoryCollection;
 
     public Library(String name) {
         this.name = name; 
@@ -30,18 +29,15 @@ public class Library {
         loanCollection.add(loan);
     }
 
-    // 대출 기록 추가
-    public void addLoanToHistory(Borrower borrower, Book book) {
-        LoanHistory loanHistory = new LoanHistory(book);
+    public void addLoanToHistory(Borrower borrower, Loan loan) {
+        // 기존 대출 기록이 있다면 리스트 가져오기
+        ArrayList<Loan> loans = loanHistoryCollection.getOrDefault(borrower, new ArrayList<>());
 
-        // 기존 대출 기록 가져오기
-        ArrayList<LoanHistory> borrowerLoanHistory = loanHistoryCollection.getOrDefault(borrower, new ArrayList<>());
+        // 새로운 대출 추가
+        loans.add(loan);
 
-        // 새 대출 기록 추가
-        borrowerLoanHistory.add(loanHistory);
-
-        // HashMap 업데이트
-        loanHistoryCollection.put(borrower, borrowerLoanHistory);
+        // HashMap에 업데이트
+        loanHistoryCollection.put(borrower, loans);
     }
 
     // 컬렉션 getter 메소드들
@@ -57,7 +53,7 @@ public class Library {
         return loanCollection;
     }
 
-    public ArrayList<LoanHistory> getLoanHistory(Borrower borrower) {
+    public ArrayList<Loan> getLoanHistory(Borrower borrower) {
         return loanHistoryCollection.get(borrower);
     }
 
